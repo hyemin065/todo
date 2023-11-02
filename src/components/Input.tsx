@@ -3,17 +3,17 @@ import styled from 'styled-components';
 
 type Props = {
   value: string;
-  setValue: (v: string) => void;
+  onChange: (v: string) => void;
 };
 
 const StyledInput = styled.input`
   height: 30px;
 `;
 
-const Input = ({ value, setValue }: Props) => {
+const Input = ({ value, onChange }: Props) => {
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    setValue(value);
+    onChange(value);
   };
 
   return <StyledInput type='text' value={value} onChange={onChangeHandler} />;

@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
-import Input from './components/Input';
-import { TodoArr } from './type/type';
-import Button from './components/Button';
 import styled from 'styled-components';
+import Input from './components/Input';
+import { Todos } from './type/type';
+import Button from './components/Button';
 
 const TodoWrap = styled.section`
   width: 100%;
@@ -66,34 +66,29 @@ const TodoInputWrap = styled.div`
 
 function App() {
   const [todoInputValue, setTodoInputValue] = useState('');
-  const [todoArr, setTodoArr] = useState<TodoArr[]>([]);
+  const [todos, setTodos] = useState<Todos[]>([]);
   const [editInputValue, setEditInputValue] = useState('');
 
   const addHandler = () => {
-    if (todoInputValue === '') return alert('값을 입력해주세요');
+    if (todoInputValue.trim() === '') return alert('값을 입력해주세요');
 
-    setTodoArr((prev) => [...prev, { id: todoInputValue, title: todoInputValue, isEdit: false }]);
+    setTodos((prev) => [...prev, { id: Date.now(), title: todoInputValue, isEdit: false }]);
     setTodoInputValue('');
   };
 
-  const confirmHandler = (item: TodoArr) => {
-    const res = todoArr.map((i) => {
-      return i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i };
-    });
-    setTodoArr(res);
+  const confirmHandler = (item: Todos) => {
+    setTodos((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i }))
+    );
   };
 
-  const editHandler = (item: TodoArr) => {
-    const res = todoArr.map((i) => {
-      return i.id === item.id ? { ...item, isEdit: true } : { ...i };
-    });
-    setTodoArr(res);
+  const editHandler = (item: Todos) => {
+    setTodos((prev) => prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i })));
     setEditInputValue(item.title);
   };
 
-  const deleteHandler = (id: string) => {
-    const res = todoArr.filter((item) => id !== item.id);
-    setTodoArr(res);
+  const deleteHandler = (id: number) => {
+    setTodos((prev) => prev.filter((item) => id !== item.id));
   };
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +102,7 @@ function App() {
         <h1>TODO</h1>
 
         <TodoList>
-          {todoArr.map((item: TodoArr) => {
+          {todos.map((item: Todos) => {
             return (
               <li key={item.id}>
                 {item.isEdit ? (
@@ -116,11 +111,10 @@ function App() {
                   <p>{item.title}</p>
                 )}
                 <ButtonWrap>
-                  {item.isEdit ? (
-                    <Button text='확인' onClick={() => confirmHandler(item)} />
-                  ) : (
-                    <Button text='수정' onClick={() => editHandler(item)} />
-                  )}
+                  <Button
+                    text={item.isEdit ? '수정완료' : '수정'}
+                    onClick={() => (item.isEdit ? confirmHandler : editHandler)(item)}
+                  />
                   <Button text='삭제' onClick={() => deleteHandler(item.id)} />
                 </ButtonWrap>
               </li>
@@ -129,8 +123,8 @@ function App() {
         </TodoList>
 
         <TodoInputWrap>
-          <Input value={todoInputValue} setValue={setTodoInputValue} />
-          <Button text='확인' onClick={addHandler} />
+          <Input value={todoInputValue} onChange={setTodoInputValue} />
+          <Button text='추가' onClick={addHandler} />
         </TodoInputWrap>
       </TodoBox>
     </TodoWrap>
