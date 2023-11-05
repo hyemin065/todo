@@ -1,5 +1,5 @@
-export type TodoArr = {
-  id: string;
+export type Todos = {
+  id: number;
   title: string;
   isEdit: boolean;
 };
