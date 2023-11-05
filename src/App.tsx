@@ -35,18 +35,17 @@ const TodoList = styled.ul`
     justify-content: space-between;
     align-items: center;
     input {
-      width: 70%;
+      width: 60%;
     }
   }
 `;
 
 const ButtonWrap = styled.div`
-  width: calc(100% - 70% - 10px);
+  width: calc(100% - 60% - 10px);
   margin-left: 10px;
   text-align: right;
 
   button {
-    padding: 5px 10px;
     &:last-child {
       margin-left: 10px;
     }
@@ -83,7 +82,7 @@ function App() {
   };
 
   const editHandler = (item: Todos) => {
-    setTodos((prev) => prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i })));
+    setTodos((prev) => prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i, isEdit: false })));
     setEditInputValue(item.title);
   };
 
@@ -94,6 +93,10 @@ function App() {
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setEditInputValue(value);
+  };
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTodoInputValue(e.currentTarget.value);
   };
 
   return (
@@ -123,7 +126,7 @@ function App() {
         </TodoList>
 
         <TodoInputWrap>
-          <Input value={todoInputValue} onChange={setTodoInputValue} />
+          <Input value={todoInputValue} onChange={onChangeHandler} />
           <Button text='추가' onClick={addHandler} />
         </TodoInputWrap>
       </TodoBox>

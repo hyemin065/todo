@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 type Props = {
   value: string;
-  onChange: (v: string) => void;
+  onChange: (v: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const StyledInput = styled.input`
@@ -11,12 +11,7 @@ const StyledInput = styled.input`
 `;
 
 const Input = ({ value, onChange }: Props) => {
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    onChange(value);
-  };
-
-  return <StyledInput type='text' value={value} onChange={onChangeHandler} />;
+  return <StyledInput type='text' value={value} onChange={onChange} />;
 };
 
 export default Input;
