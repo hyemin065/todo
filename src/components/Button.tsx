@@ -1,19 +1,33 @@
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  border: 1px solid #000;
   padding: 5px 10px;
+  width: 100%;
+  height: 60px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+
+  &.success {
+    background-color: #ffae00;
+  }
+
+  &.disabled {
+    background-color: #757575;
+  }
 `;
 
 type Props = {
-  text: string;
+  isLoading?: boolean;
+  type?: string;
+  children: string | JSX.Element | JSX.Element[];
   onClick: () => void;
 };
 
-const Button = ({ text, onClick }: Props) => {
+const Button = ({ type = 'success', isLoading, onClick, children }: Props) => {
   return (
-    <StyledButton type='button' onClick={onClick}>
-      {text}
+    <StyledButton className={isLoading ? 'disabled' : type} onClick={onClick}>
+      {children}
     </StyledButton>
   );
 };

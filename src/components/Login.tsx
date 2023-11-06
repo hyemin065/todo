@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Button from './Button';
+import { useState, ChangeEvent } from 'react';
+import FormGroup from './FormGroup';
 
 const LoginWrap = styled.section`
   width: 100%;
@@ -8,50 +10,48 @@ const LoginWrap = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  > div {
-    width: 500px;
+  > form {
+    width: 400px;
   }
 `;
 
-const FormGroup = styled.div`
-  margin-bottom: 30px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-
-  label {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-  input {
-    border-bottom: 1px solid #fff;
-    width: 100%;
-    height: 40px;
-  }
-`;
+type LoginType = {
+  id: string;
+  password: string;
+};
 
 const Login = () => {
+  const [loginValue, setLoginValue] = useState<LoginType>({
+    id: '',
+    password: ''
+  });
+
+  const inputValueChangeHandler = (key: keyof LoginType, value: string) => {
+    setLoginValue((prev) => ({ ...prev, [key]: value }));
+  };
+
   const onClick = () => {};
   const submitHandler = () => {};
 
   return (
     <LoginWrap>
       <form onSubmit={submitHandler}>
-        <FormGroup>
-          <label htmlFor=''>ID</label>
-          <input type='text' />
-        </FormGroup>
+        <FormGroup
+          id='id'
+          label='ID'
+          value={loginValue.id}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('id', e.currentTarget.value)}
+        />
 
-        <FormGroup>
-          <label htmlFor=''>password</label>
-          <input type='password' />
-        </FormGroup>
+        <FormGroup
+          id='password'
+          label='password'
+          type='password'
+          value={loginValue.password}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('password', e.currentTarget.value)}
+        />
 
-        <Button text='로그인' onClick={onClick} />
+        <Button onClick={onClick}>로그인</Button>
       </form>
     </LoginWrap>
   );

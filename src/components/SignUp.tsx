@@ -4,7 +4,6 @@ import { useState, ChangeEvent } from 'react';
 import FormGroup from './FormGroup';
 import { JoinType, JoinErrorMessageType } from '../type/type';
 import { joinApi } from '../api/axiosPublic';
-import { Link } from 'react-router-dom';
 
 const JoinWrap = styled.section`
   width: 100%;
@@ -15,26 +14,6 @@ const JoinWrap = styled.section`
   align-items: center;
   > form {
     width: 400px;
-  }
-`;
-
-const JoinSuccessWrap = styled.div`
-  p {
-    color: #fff;
-    margin-bottom: 30px;
-  }
-
-  a {
-    width: 400px;
-    display: block;
-    padding: 22px 10px;
-    height: 60px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: #000;
-    background-color: #ffae00;
   }
 `;
 
@@ -63,8 +42,6 @@ const Join = () => {
     name: '',
     error: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [joinSuccess, setJoinSuccess] = useState(false);
 
   const inputValueChangeHandler = (key: keyof JoinType, value: string) => {
     setErrorMessage((prev) => ({ ...prev, [key]: '', error: '' }));
@@ -95,14 +72,9 @@ const Join = () => {
       errorMessage.name = '이름을 입력해주세요';
     }
 
-    if (joinValue.password.length < 6) {
-      errorMessage.passwordConfirm = '비밀번호는 6자리 이상 입력해주세요';
-    }
-
     if (joinValue.password !== joinValue.passwordConfirm) {
       errorMessage.passwordConfirm = '비밀번호를 확인해주세요';
     }
-
     if (!emailRegEx.test(joinValue.email)) {
       errorMessage.email = '이메일을 확인해주세요';
     }
@@ -114,15 +86,12 @@ const Join = () => {
       joinValue.passwordConfirm.trim() !== '' &&
       joinValue.email.trim() !== '' &&
       joinValue.name.trim() !== '' &&
-      joinValue.password.length >= 6 &&
       joinValue.password.trim() === joinValue.passwordConfirm.trim() &&
       emailRegEx.test(joinValue.email)
     ) {
       try {
         const res = await joinApi(joinValue);
-        if (res) {
-          setJoinSuccess(true);
-        }
+        alert(res.message);
       } catch (error: any) {
         setErrorMessage((prev) => ({ ...prev, error: error.message }));
       }
@@ -131,61 +100,54 @@ const Join = () => {
 
   return (
     <JoinWrap>
-      {joinSuccess ? (
-        <JoinSuccessWrap>
-          <p> 회원가입이 완료되었습니다</p>
-          <Link to='/login'>로그인</Link>
-        </JoinSuccessWrap>
-      ) : (
-        <form onSubmit={submitHandler}>
-          <FormGroup
-            id='id'
-            label='id'
-            value={joinValue.id}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('id', e.currentTarget.value)}
-            errorMessage={errorMessage.id}
-          />
+      <form onSubmit={submitHandler}>
+        <FormGroup
+          id='id'
+          label='id'
+          value={joinValue.id}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('id', e.currentTarget.value)}
+          errorMessage={errorMessage.id}
+        />
 
-          <FormGroup
-            id='password'
-            label='password'
-            type='password'
-            value={joinValue.password}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('password', e.currentTarget.value)}
-            errorMessage={errorMessage.password}
-          />
+        <FormGroup
+          id='password'
+          label='password'
+          type='password'
+          value={joinValue.password}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('password', e.currentTarget.value)}
+          errorMessage={errorMessage.password}
+        />
 
-          <FormGroup
-            id='passwordConfirm'
-            label='password confirm'
-            type='password'
-            value={joinValue.passwordConfirm}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              inputValueChangeHandler('passwordConfirm', e.currentTarget.value)
-            }
-            errorMessage={errorMessage.passwordConfirm}
-          />
+        <FormGroup
+          id='passwordConfirm'
+          label='password confirm'
+          type='password'
+          value={joinValue.passwordConfirm}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            inputValueChangeHandler('passwordConfirm', e.currentTarget.value)
+          }
+          errorMessage={errorMessage.passwordConfirm}
+        />
 
-          <FormGroup
-            id='email'
-            label='email'
-            value={joinValue.email}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('email', e.currentTarget.value)}
-            errorMessage={errorMessage.email}
-          />
+        <FormGroup
+          id='email'
+          label='email'
+          value={joinValue.email}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('email', e.currentTarget.value)}
+          errorMessage={errorMessage.email}
+        />
 
-          <FormGroup
-            id='name'
-            label='name'
-            value={joinValue.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('name', e.currentTarget.value)}
-            errorMessage={errorMessage.name}
-          />
+        <FormGroup
+          id='name'
+          label='name'
+          value={joinValue.name}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('name', e.currentTarget.value)}
+          errorMessage={errorMessage.name}
+        />
 
-          <JoinErrorMessage>{errorMessage.error}</JoinErrorMessage>
-          <Button onClick={onClick}>회원가입</Button>
-        </form>
-      )}
+        <JoinErrorMessage>{errorMessage.error}</JoinErrorMessage>
+        <Button onClick={onClick}>회원가입</Button>
+      </form>
     </JoinWrap>
   );
 };

@@ -114,11 +114,10 @@ function App() {
                   <p>{item.title}</p>
                 )}
                 <ButtonWrap>
-                  <Button
-                    text={item.isEdit ? '수정완료' : '수정'}
-                    onClick={() => (item.isEdit ? confirmHandler : editHandler)(item)}
-                  />
-                  <Button text='삭제' onClick={() => deleteHandler(item.id)} />
+                  <Button onClick={() => (item.isEdit ? confirmHandler : editHandler)(item)}>
+                    {item.isEdit ? '수정완료' : '수정'}
+                  </Button>
+                  <Button onClick={() => deleteHandler(item.id)}>삭제</Button>
                 </ButtonWrap>
               </li>
             );
@@ -127,7 +126,7 @@ function App() {
 
         <TodoInputWrap>
           <Input value={todoInputValue} onChange={onChangeHandler} />
-          <Button text='추가' onClick={addHandler} />
+          <Button onClick={addHandler}>추가</Button>
         </TodoInputWrap>
       </TodoBox>
     </TodoWrap>
