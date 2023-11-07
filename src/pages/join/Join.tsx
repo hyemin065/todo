@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import Button from './Button';
 import { useState, ChangeEvent } from 'react';
-import FormGroup from './FormGroup';
-import { JoinType, JoinErrorMessageType } from '../type/type';
-import { joinApi } from '../api/axiosPublic';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { JoinType, JoinErrorMessageType } from '../../type/type';
+import { joinApi } from '../../api/axiosPublic';
+import InputGroup from '../../components/molecules/InputGroup';
+import Button from '../../components/atoms/Button';
 
 const JoinWrap = styled.section`
   width: 100%;
@@ -138,7 +138,7 @@ const Join = () => {
         </JoinSuccessWrap>
       ) : (
         <form onSubmit={submitHandler}>
-          <FormGroup
+          <InputGroup
             id='id'
             label='id'
             value={joinValue.id}
@@ -146,7 +146,7 @@ const Join = () => {
             errorMessage={errorMessage.id}
           />
 
-          <FormGroup
+          <InputGroup
             id='password'
             label='password'
             type='password'
@@ -155,7 +155,7 @@ const Join = () => {
             errorMessage={errorMessage.password}
           />
 
-          <FormGroup
+          <InputGroup
             id='passwordConfirm'
             label='password confirm'
             type='password'
@@ -166,7 +166,7 @@ const Join = () => {
             errorMessage={errorMessage.passwordConfirm}
           />
 
-          <FormGroup
+          <InputGroup
             id='email'
             label='email'
             value={joinValue.email}
@@ -174,7 +174,7 @@ const Join = () => {
             errorMessage={errorMessage.email}
           />
 
-          <FormGroup
+          <InputGroup
             id='name'
             label='name'
             value={joinValue.name}

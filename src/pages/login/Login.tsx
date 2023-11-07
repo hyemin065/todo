@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import Button from './Button';
 import { useState, ChangeEvent } from 'react';
-import FormGroup from './FormGroup';
+import styled from 'styled-components';
+import InputGroup from '../../components/molecules/InputGroup';
+import Button from '../../components/atoms/Button';
 
 const LoginWrap = styled.section`
   width: 100%;
@@ -36,14 +36,14 @@ const Login = () => {
   return (
     <LoginWrap>
       <form onSubmit={submitHandler}>
-        <FormGroup
+        <InputGroup
           id='id'
           label='ID'
           value={loginValue.id}
           onChange={(e: ChangeEvent<HTMLInputElement>) => inputValueChangeHandler('id', e.currentTarget.value)}
         />
 
-        <FormGroup
+        <InputGroup
           id='password'
           label='password'
           type='password'

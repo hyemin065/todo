@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import Input from './components/Input';
-import { Todos } from './type/type';
-import Button from './components/Button';
+import { Todos } from '../../type/type';
+import Button from '../../components/atoms/Button';
+import Input from '../../components/atoms/Input';
 
 const TodoWrap = styled.section`
   width: 100%;
@@ -63,7 +63,7 @@ const TodoInputWrap = styled.div`
   }
 `;
 
-function App() {
+function Todo() {
   const [todoInputValue, setTodoInputValue] = useState('');
   const [todos, setTodos] = useState<Todos[]>([]);
   const [editInputValue, setEditInputValue] = useState('');
@@ -133,4 +133,4 @@ function App() {
   );
 }
 
-export default App;
+export default Todo;

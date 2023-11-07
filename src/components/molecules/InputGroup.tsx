@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import Input from './Input';
 import { ChangeEvent } from 'react';
+import styled from 'styled-components';
+import Input from '../atoms/Input';
 
 const FormInputGroup = styled.div`
   margin-bottom: 30px;
@@ -31,11 +31,11 @@ type Props = {
   label: string;
   type?: any;
   value: string;
-  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorMessage?: string;
 };
 
-const FormGroup = ({ id, label, type, value, onChange, errorMessage }: Props) => {
+const InputGroup = ({ id, label, type, value, onChange, errorMessage }: Props) => {
   return (
     <FormInputGroup>
       <label htmlFor='id'>{label}</label>
@@ -44,4 +44,4 @@ const FormGroup = ({ id, label, type, value, onChange, errorMessage }: Props) =>
     </FormInputGroup>
   );
 };
-export default FormGroup;
+export default InputGroup;
