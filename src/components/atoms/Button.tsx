@@ -21,7 +21,7 @@ type Props = {
   isLoading?: boolean;
   type?: string;
   children: string | JSX.Element | JSX.Element[];
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button = ({ type = 'success', isLoading, onClick, children }: Props) => {

@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import Input from '../atoms/Input';
+import ErrorMessage from '../atoms/ErrorMessage';
 
 const FormInputGroup = styled.div`
   margin-bottom: 30px;
@@ -20,12 +21,6 @@ const FormInputGroup = styled.div`
   }
 `;
 
-const ErrorMessage = styled.span`
-  color: red;
-  margin-top: 10px;
-  font-size: 12px;
-`;
-
 type Props = {
   id: string;
   label: string;
@@ -40,7 +35,7 @@ const InputGroup = ({ id, label, type, value, onChange, errorMessage }: Props) =
     <FormInputGroup>
       <label htmlFor='id'>{label}</label>
       <Input type={type} value={value} id={id} onChange={onChange} className={errorMessage && 'error'} />
-      {errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {errorMessage !== '' && errorMessage && <ErrorMessage errorMsg={errorMessage}></ErrorMessage>}
     </FormInputGroup>
   );
 };
