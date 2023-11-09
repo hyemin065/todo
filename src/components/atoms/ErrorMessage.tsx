@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledErrorMessage = styled.span`
+const StyledErrorMessage = styled.p`
   color: red;
   margin-top: 10px;
   font-size: 12px;

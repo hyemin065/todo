@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { JoinType, JoinErrorMessageType } from '../../type/type';
 import { joinApi } from '../../api/axiosPublic';
 import JoinForm from '../../components/organisms/JoinForm';
+import { emailRegEx, isValidate } from '../../utils';
 
 const JoinWrap = styled.section`
   width: 100%;
@@ -37,8 +38,6 @@ const JoinSuccessWrap = styled.div`
   }
 `;
 
-const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
 const Join = () => {
   const [joinValue, setJoinValue] = useState<JoinType>({
     id: '',
@@ -66,38 +65,7 @@ const Join = () => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (joinValue.id.trim() === '') {
-      errorMessage.id = '아이디를 입력해주세요';
-    }
-
-    if (joinValue.password.trim() === '') {
-      errorMessage.password = '비밀번호를 입력해주세요';
-    }
-
-    if (joinValue.passwordConfirm.trim() === '') {
-      errorMessage.passwordConfirm = '비밀번호를 확인해주세요';
-    }
-
-    if (joinValue.email.trim() === '') {
-      errorMessage.email = '이메일을 입력해주세요';
-    }
-
-    if (joinValue.name.trim() === '') {
-      errorMessage.name = '이름을 입력해주세요';
-    }
-
-    if (joinValue.password.length < 6) {
-      errorMessage.passwordConfirm = '비밀번호는 6자리 이상 입력해주세요';
-    }
-
-    if (joinValue.password !== joinValue.passwordConfirm) {
-      errorMessage.passwordConfirm = '비밀번호를 확인해주세요';
-    }
-
-    if (!emailRegEx.test(joinValue.email)) {
-      errorMessage.email = '이메일을 확인해주세요';
-    }
-    setErrorMessage((prev) => ({ ...prev, ...errorMessage }));
+    setErrorMessage((prev) => ({ ...prev, errorMessage: isValidate(joinValue, errorMessage) }));
 
     if (
       joinValue.id.trim() !== '' &&
@@ -110,12 +78,15 @@ const Join = () => {
       emailRegEx.test(joinValue.email)
     ) {
       try {
+        setIsLoading(true);
         const res = await joinApi(joinValue);
         if (res) {
           setJoinSuccess(true);
         }
       } catch (error: any) {
         setErrorMessage((prev) => ({ ...prev, error: error.message }));
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -133,6 +104,7 @@ const Join = () => {
           errorMsg={errorMessage}
           submitHandler={submitHandler}
           inputChangeHandler={inputValueChangeHandler}
+          isLoading={isLoading}
         />
       )}
     </JoinWrap>

@@ -12,8 +12,9 @@ const StyledButton = styled.button`
     background-color: #ffae00;
   }
 
-  &.disabled {
+  &:disabled {
     background-color: #757575;
+    cursor: no-drop;
   }
 `;
 
@@ -26,8 +27,8 @@ type Props = {
 
 const Button = ({ type = 'success', isLoading, onClick, children }: Props) => {
   return (
-    <StyledButton className={isLoading ? 'disabled' : type} onClick={onClick}>
-      {children}
+    <StyledButton className={type} onClick={onClick} disabled={isLoading}>
+      {isLoading ? '로딩중' : children}
     </StyledButton>
   );
 };

@@ -16,9 +16,10 @@ type Props = {
   errorMsg: JoinErrorMessageType;
   submitHandler: (e: React.FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (key: keyof JoinType, value: string) => void;
+  isLoading: boolean;
 };
 
-const JoinForm = ({ data, errorMsg, submitHandler, inputChangeHandler }: Props) => {
+const JoinForm = ({ data, errorMsg, submitHandler, inputChangeHandler, isLoading }: Props) => {
   return (
     <form onSubmit={submitHandler}>
       <InputGroup
@@ -64,7 +65,7 @@ const JoinForm = ({ data, errorMsg, submitHandler, inputChangeHandler }: Props) 
       />
 
       <JoinErrorMessage errorMsg={errorMsg.error}></JoinErrorMessage>
-      <Button>회원가입</Button>
+      <Button isLoading={isLoading}>회원가입</Button>
     </form>
   );
 };
