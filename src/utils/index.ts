@@ -3,7 +3,6 @@ import { JoinErrorMessageType, JoinType } from '../type/type';
 export const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
 export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) => {
-  console.log('value', value, 'errorMessage', errorMessage);
   errorMessage.error = '';
 
   if (value.id.trim() === '') {
@@ -27,6 +26,4 @@ export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) 
   if (value.name.trim() === '') {
     errorMessage.name = '이름을 확인해주세요';
   }
-
-  console.log(errorMessage);
 };

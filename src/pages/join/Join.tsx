@@ -79,10 +79,14 @@ const Join = () => {
     ) {
       try {
         setIsLoading(true);
-        const res = await joinApi(joinValue);
-        if (res) {
-          setJoinSuccess(true);
-        }
+        await joinApi({
+          userId: joinValue.id,
+          email: joinValue.email,
+          password: joinValue.password,
+          name: joinValue.name
+        });
+
+        setJoinSuccess(true);
       } catch (error: any) {
         setErrorMessage((prev) => ({ ...prev, error: error.message }));
       } finally {

@@ -12,6 +12,13 @@ export type JoinType = {
   name: string;
 };
 
+export type JoinPropsType = {
+  userId: string;
+  password: string;
+  email: string;
+  name: string;
+};
+
 export type JoinErrorMessageType = {
   id: string;
   password: string;

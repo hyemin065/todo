@@ -22,8 +22,8 @@ const FormInputGroup = styled.div`
 `;
 
 type Props = {
-  id: string;
-  label: string;
+  id?: string;
+  label?: string;
   type?: any;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -33,7 +33,7 @@ type Props = {
 const InputGroup = ({ id, label, type, value, onChange, errorMessage }: Props) => {
   return (
     <FormInputGroup>
-      <label htmlFor='id'>{label}</label>
+      {label && <label htmlFor='id'>{label}</label>}
       <Input type={type} value={value} id={id} onChange={onChange} className={errorMessage && 'error'} />
       {errorMessage !== '' && errorMessage && <ErrorMessage errorMsg={errorMessage}></ErrorMessage>}
     </FormInputGroup>

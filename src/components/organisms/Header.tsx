@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -12,7 +12,9 @@ const StyledHeader = styled.header`
 
   h1 {
     font-size: 16px;
-    color: #fff;
+    a {
+      color: #fff;
+    }
   }
 `;
 
@@ -26,6 +28,9 @@ const Nav = styled.ul`
     a {
       color: #fff;
       font-size: 16px;
+      &.active {
+        color: #ffae00;
+      }
     }
   }
 `;
@@ -33,13 +38,19 @@ const Nav = styled.ul`
 const Header = () => {
   return (
     <StyledHeader>
-      <h1>TODO</h1>
+      <h1>
+        <Link to='/'>TODO</Link>
+      </h1>
       <Nav>
         <li>
-          <NavLink to='/login'>Sign In</NavLink>
+          <NavLink to='/login' className={({ isActive }) => (isActive ? 'active' : '')}>
+            Sign In
+          </NavLink>
         </li>
         <li>
-          <NavLink to='/join'>Sign Up</NavLink>
+          <NavLink to='/join' className={({ isActive }) => (isActive ? 'active' : '')}>
+            Sign Up
+          </NavLink>
         </li>
       </Nav>
     </StyledHeader>

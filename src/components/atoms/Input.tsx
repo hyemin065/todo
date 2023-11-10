@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  type?: string;
+  type?: 'button' | 'email' | 'file' | 'number' | 'password' | 'search' | 'submit' | 'tel' | 'text';
   id?: string;
   value: string;
   className?: string;
