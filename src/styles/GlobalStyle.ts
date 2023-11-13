@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: transparent;
         background-image: none;
         border: 0;
-        border-bottom:1px solid #000;
+        border-bottom: 1px solid rgba(239, 241, 255, 0.1);
     }
 
     button {
@@ -78,22 +78,10 @@ const GlobalStyle = createGlobalStyle`
         font-family: Poppins, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif;
     }
 
-    html{
-        scrollbar-gutter: stable both-edges;
-    }
-
     body {
         background-color: rgb(28, 26, 24);
     }
 
-    ::-webkit-scrollbar {
-        background-color: transparent;
-        width: 7px;
-    }
-    ::-webkit-scrollbar-thumb {
-        border-radius: 7px;
-        background: #2E2C30;
-    }
     
 `;
 

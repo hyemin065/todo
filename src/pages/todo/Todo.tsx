@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import Input from './components/Input';
-import { Todos } from './type/type';
-import Button from './components/Button';
+import { Todos } from '../../type/type';
+import Button from '../../components/atoms/Button';
+import Input from '../../components/atoms/Input';
 
 const TodoWrap = styled.section`
   width: 100%;
@@ -63,7 +63,7 @@ const TodoInputWrap = styled.div`
   }
 `;
 
-function App() {
+function Todo() {
   const [todoInputValue, setTodoInputValue] = useState('');
   const [todos, setTodos] = useState<Todos[]>([]);
   const [editInputValue, setEditInputValue] = useState('');
@@ -114,11 +114,10 @@ function App() {
                   <p>{item.title}</p>
                 )}
                 <ButtonWrap>
-                  <Button
-                    text={item.isEdit ? '수정완료' : '수정'}
-                    onClick={() => (item.isEdit ? confirmHandler : editHandler)(item)}
-                  />
-                  <Button text='삭제' onClick={() => deleteHandler(item.id)} />
+                  <Button onClick={() => (item.isEdit ? confirmHandler : editHandler)(item)}>
+                    {item.isEdit ? '수정완료' : '수정'}
+                  </Button>
+                  <Button onClick={() => deleteHandler(item.id)}>삭제</Button>
                 </ButtonWrap>
               </li>
             );
@@ -127,11 +126,11 @@ function App() {
 
         <TodoInputWrap>
           <Input value={todoInputValue} onChange={onChangeHandler} />
-          <Button text='추가' onClick={addHandler} />
+          <Button onClick={addHandler}>추가</Button>
         </TodoInputWrap>
       </TodoBox>
     </TodoWrap>
   );
 }
 
-export default App;
+export default Todo;
