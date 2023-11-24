@@ -24,7 +24,7 @@ const FormInputGroup = styled.div`
 type Props = {
   id?: string;
   label?: string;
-  type?: any;
+  type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text';
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   errorMessage?: string;

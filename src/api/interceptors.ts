@@ -65,7 +65,7 @@ const updateTokenAndRetryRequest = async (error: any) => {
 };
 //요청 인터셉터
 instance.interceptors.request.use(
-  (request: any) => {
+  (request) => {
     const token = getLocalStorageToken();
 
     if (token) {
@@ -77,17 +77,17 @@ instance.interceptors.request.use(
 
     return request;
   },
-  (error: any) => {
+  (error) => {
     return Promise.reject(error);
   },
 );
 
 // 응답 인터셉터
 instance.interceptors.response.use(
-  (response: any) => {
+  (response) => {
     return response;
   },
-  async (error: any) => {
+  async (error) => {
     if (error?.response?.data.statusCode === 401) {
       const res = await updateTokenAndRetryRequest(error);
       return res;

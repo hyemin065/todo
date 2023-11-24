@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import InputGroup from '../../components/molecules/InputGroup';
 import Button from '../../components/atoms/Button';
-import { LoginType } from '../../type/type';
+import { LoginType, UserType } from '../../type/type';
 import { loginApi } from '../../api/axiosPublic';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -58,7 +58,8 @@ const Login = () => {
       const res = await loginApi({ alias: loginValue.id, password: loginValue.password });
       if (res) {
         localStorage.setItem('token', JSON.stringify(res.token));
-        const user = jwtDecode(res.token.accessToken);
+        const user: UserType = jwtDecode(res.token.accessToken);
+        console.log(user);
         setUserInfo(user);
         alert('로그인 되었습니다.');
         navigate('/');

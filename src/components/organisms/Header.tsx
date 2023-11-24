@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Button from '../atoms/Button';
 import { getLocalStorageToken } from '../../utils';
+import { UserType } from '../../type/type';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -48,8 +49,11 @@ const Header = () => {
 
   useEffect(() => {
     const token = getLocalStorageToken();
-    const user = token !== null && jwtDecode(token?.accessToken);
-    setUserInfo(user);
+    if (token) {
+      const user: UserType = jwtDecode(token?.accessToken);
+      console.log(user);
+      setUserInfo(user);
+    }
   }, [setUserInfo]);
 
   const logoutHandler = () => {
@@ -65,9 +69,9 @@ const Header = () => {
         <Link to="/">TODO</Link>
       </h1>
       <Nav>
-        {userInfo?.email ? (
+        {userInfo?.userId ? (
           <>
-            <li>{`${userInfo.email}님 안녕하세요`}</li>
+            <li>{`${userInfo.userId}님 안녕하세요`}</li>
             <li>
               <Button onClick={logoutHandler}>Logout</Button>
             </li>
