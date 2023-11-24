@@ -5,29 +5,36 @@ const StyledButton = styled.button`
   width: 100%;
   height: 60px;
   border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
 
   &.success {
     background-color: #ffae00;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
   }
 
   &:disabled {
     background-color: #757575;
     cursor: no-drop;
+    font-size: 16px;
+    font-weight: bold;
   }
 `;
 
 type Props = {
+  className?: string;
+  buttonType?: 'button' | 'submit' | 'reset';
+  buttonStyle?: string;
   isLoading?: boolean;
-  type?: string;
   children: string | JSX.Element | JSX.Element[];
   onClick?: () => void;
 };
 
-const Button = ({ type = 'success', isLoading, onClick, children }: Props) => {
+const Button = ({ buttonType = 'submit', className, isLoading, onClick, children }: Props) => {
   return (
-    <StyledButton className={type} onClick={onClick} disabled={isLoading}>
+    <StyledButton type={buttonType} className={className} onClick={onClick} disabled={isLoading}>
       {isLoading ? '로딩중' : children}
     </StyledButton>
   );

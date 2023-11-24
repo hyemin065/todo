@@ -8,9 +8,10 @@ const StyledErrorMessage = styled.p`
 
 type Props = {
   errorMsg: string;
+  className?: string;
 };
-const ErrorMessage = ({ errorMsg }: Props) => {
-  return <StyledErrorMessage>{errorMsg}</StyledErrorMessage>;
+const ErrorMessage = ({ errorMsg, className }: Props) => {
+  return <StyledErrorMessage className={className}>{errorMsg}</StyledErrorMessage>;
 };
 
 export default ErrorMessage;

@@ -26,4 +26,15 @@ export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) 
   if (value.name.trim() === '') {
     errorMessage.name = '이름을 확인해주세요';
   }
+
+  return Object.values(errorMessage).every((errors) => errors === '') ? '' : errorMessage;
+};
+
+export const getLocalStorageToken = () => {
+  const token = localStorage.getItem('token') || '';
+  if (token) {
+    const { accessToken, refreshToken } = JSON.parse(token);
+    return { accessToken, refreshToken };
+  }
+  return null;
 };

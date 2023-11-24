@@ -6,7 +6,7 @@ import Input from '../../components/atoms/Input';
 
 const TodoWrap = styled.section`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,12 +77,16 @@ function Todo() {
 
   const confirmHandler = (item: Todos) => {
     setTodos((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i }))
+      prev.map((i) =>
+        i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i },
+      ),
     );
   };
 
   const editHandler = (item: Todos) => {
-    setTodos((prev) => prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i, isEdit: false })));
+    setTodos((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i, isEdit: false })),
+    );
     setEditInputValue(item.title);
   };
 
@@ -109,7 +113,7 @@ function Todo() {
             return (
               <li key={item.id}>
                 {item.isEdit ? (
-                  <input type='text' value={editInputValue} onChange={changeTitle} />
+                  <input type="text" value={editInputValue} onChange={changeTitle} />
                 ) : (
                   <p>{item.title}</p>
                 )}
@@ -126,8 +130,11 @@ function Todo() {
 
         <TodoInputWrap>
           <Input value={todoInputValue} onChange={onChangeHandler} />
-          <Button onClick={addHandler}>추가</Button>
+          <Button className="success" onClick={addHandler}>
+            추가
+          </Button>
         </TodoInputWrap>
+        <table></table>
       </TodoBox>
     </TodoWrap>
   );
