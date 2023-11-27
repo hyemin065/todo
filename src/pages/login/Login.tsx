@@ -59,7 +59,6 @@ const Login = () => {
       if (res) {
         localStorage.setItem('token', JSON.stringify(res.token));
         const user: UserType = jwtDecode(res.token.accessToken);
-        console.log(user);
         setUserInfo(user);
         alert('로그인 되었습니다.');
         navigate('/');

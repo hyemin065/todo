@@ -30,7 +30,7 @@ const updateTokenAndRetryRequest = async (error: any) => {
   const token = getLocalStorageToken();
   try {
     const retryOriginalRequest = new Promise((resolve, reject) => {
-      addSubscriber(async (accessToken: string) => {
+      addSubscriber((accessToken: string) => {
         try {
           errorResponse.config.headers.Authorization = `Bearer ${accessToken}`;
           resolve(instance(originalConfig));
@@ -39,7 +39,6 @@ const updateTokenAndRetryRequest = async (error: any) => {
         }
       });
     });
-
     if (!isAlreadyFetchingAccessToken) {
       isAlreadyFetchingAccessToken = true;
 
@@ -51,7 +50,6 @@ const updateTokenAndRetryRequest = async (error: any) => {
         );
 
         isAlreadyFetchingAccessToken = false;
-
         onAccessTokenFetched(res.token);
       }
     }

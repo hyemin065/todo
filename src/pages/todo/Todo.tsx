@@ -1,8 +1,9 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Todos } from '../../type/type';
 import Button from '../../components/atoms/Button';
 import Input from '../../components/atoms/Input';
+import { testApi } from '../../api/axiosPublic';
 
 const TodoWrap = styled.section`
   width: 100%;
@@ -103,10 +104,27 @@ function Todo() {
     setTodoInputValue(e.currentTarget.value);
   };
 
+  const [testData, setTestData] = useState('');
+  const [testError, setTestError] = useState('');
+
+  const test = async () => {
+    try {
+      const test = await testApi();
+      setTestData(test);
+    } catch (error: any) {
+      setTestError(error.message);
+    }
+  };
+
+  useEffect(() => {
+    test();
+  }, []);
+
   return (
     <TodoWrap>
       <TodoBox>
         <h1>TODO</h1>
+        <p>{testData ? testData : testError}</p>
 
         <TodoList>
           {todos.map((item: Todos) => {

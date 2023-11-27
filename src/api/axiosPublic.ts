@@ -1,5 +1,6 @@
 import { JoinPropsType, LoginPropsType } from '../type/type';
 import { axiosInstance } from './instance';
+import { instance } from './interceptors';
 
 export const joinApi = async (params: JoinPropsType) => {
   try {
@@ -23,6 +24,15 @@ export const updateAccessToken = async (refreshToken: string) => {
     const res = await axiosInstance.get(`/api/auth/accessToken`, {
       headers: { Authorization: `Bearer ${refreshToken}` },
     });
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message || error);
+  }
+};
+
+export const testApi = async () => {
+  try {
+    const res = await instance.get(`/test`);
     return res.data;
   } catch (error: any) {
     throw new Error(error?.response?.data?.message || error);

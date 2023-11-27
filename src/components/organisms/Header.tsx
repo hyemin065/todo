@@ -51,7 +51,6 @@ const Header = () => {
     const token = getLocalStorageToken();
     if (token) {
       const user: UserType = jwtDecode(token?.accessToken);
-      console.log(user);
       setUserInfo(user);
     }
   }, [setUserInfo]);
