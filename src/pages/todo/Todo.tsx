@@ -1,12 +1,13 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Todos } from '../../type/type';
 import Button from '../../components/atoms/Button';
 import Input from '../../components/atoms/Input';
+import { testApi } from '../../api/axiosPublic';
 
 const TodoWrap = styled.section`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,12 +78,16 @@ function Todo() {
 
   const confirmHandler = (item: Todos) => {
     setTodos((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i }))
+      prev.map((i) =>
+        i.id === item.id ? { ...item, title: editInputValue, isEdit: false } : { ...i },
+      ),
     );
   };
 
   const editHandler = (item: Todos) => {
-    setTodos((prev) => prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i, isEdit: false })));
+    setTodos((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...item, isEdit: true } : { ...i, isEdit: false })),
+    );
     setEditInputValue(item.title);
   };
 
@@ -99,17 +104,34 @@ function Todo() {
     setTodoInputValue(e.currentTarget.value);
   };
 
+  const [testData, setTestData] = useState('');
+  const [testError, setTestError] = useState('');
+
+  const test = async () => {
+    try {
+      const test = await testApi();
+      setTestData(test);
+    } catch (error: any) {
+      setTestError(error.message);
+    }
+  };
+
+  useEffect(() => {
+    test();
+  }, []);
+
   return (
     <TodoWrap>
       <TodoBox>
         <h1>TODO</h1>
+        <p>{testData ? testData : testError}</p>
 
         <TodoList>
           {todos.map((item: Todos) => {
             return (
               <li key={item.id}>
                 {item.isEdit ? (
-                  <input type='text' value={editInputValue} onChange={changeTitle} />
+                  <input type="text" value={editInputValue} onChange={changeTitle} />
                 ) : (
                   <p>{item.title}</p>
                 )}
@@ -126,8 +148,11 @@ function Todo() {
 
         <TodoInputWrap>
           <Input value={todoInputValue} onChange={onChangeHandler} />
-          <Button onClick={addHandler}>추가</Button>
+          <Button className="success" onClick={addHandler}>
+            추가
+          </Button>
         </TodoInputWrap>
+        <table></table>
       </TodoBox>
     </TodoWrap>
   );

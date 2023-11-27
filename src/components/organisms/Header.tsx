@@ -1,5 +1,11 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { userState } from '../../store/login';
+import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import Button from '../atoms/Button';
+import { getLocalStorageToken } from '../../utils';
+import { UserType } from '../../type/type';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -19,12 +25,14 @@ const StyledHeader = styled.header`
 `;
 
 const Nav = styled.ul`
-  width: 160px;
+  width: 400px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
   li {
-    width: 50%;
     text-align: right;
+    color: #fff;
+    margin-left: 20px;
     a {
       color: #fff;
       font-size: 16px;
@@ -36,22 +44,51 @@ const Nav = styled.ul`
 `;
 
 const Header = () => {
+  const { userInfo, setUserInfo } = userState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getLocalStorageToken();
+    if (token) {
+      const user: UserType = jwtDecode(token?.accessToken);
+      setUserInfo(user);
+    }
+  }, [setUserInfo]);
+
+  const logoutHandler = () => {
+    localStorage.removeItem('token');
+    setUserInfo({ id: 0, userId: '', email: '', exp: 0, iat: 0 });
+    alert('로그아웃 되었습니다');
+    navigate('/');
+  };
+
   return (
     <StyledHeader>
       <h1>
-        <Link to='/'>TODO</Link>
+        <Link to="/">TODO</Link>
       </h1>
       <Nav>
-        <li>
-          <NavLink to='/login' className={({ isActive }) => (isActive ? 'active' : '')}>
-            Sign In
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/join' className={({ isActive }) => (isActive ? 'active' : '')}>
-            Sign Up
-          </NavLink>
-        </li>
+        {userInfo?.userId ? (
+          <>
+            <li>{`${userInfo.userId}님 안녕하세요`}</li>
+            <li>
+              <Button onClick={logoutHandler}>Logout</Button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>
+                Sign In
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/join" className={({ isActive }) => (isActive ? 'active' : '')}>
+                Sign Up
+              </NavLink>
+            </li>
+          </>
+        )}
       </Nav>
     </StyledHeader>
   );

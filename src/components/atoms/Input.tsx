@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  type?: 'button' | 'email' | 'file' | 'number' | 'password' | 'search' | 'submit' | 'tel' | 'text';
+  type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text';
   id?: string;
   value: string;
   className?: string;
@@ -20,7 +20,9 @@ const StyledInput = styled.input`
 `;
 
 const Input = ({ type = 'text', id, value, className, onChange }: Props) => {
-  return <StyledInput className={className} type={type} id={id} value={value} onChange={onChange} />;
+  return (
+    <StyledInput className={className} type={type} id={id} value={value} onChange={onChange} />
+  );
 };
 
 export default Input;

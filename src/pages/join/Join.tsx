@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { JoinType, JoinErrorMessageType } from '../../type/type';
 import { joinApi } from '../../api/axiosPublic';
 import JoinForm from '../../components/organisms/JoinForm';
-import { emailRegEx, isValidate } from '../../utils';
+import { isValidate } from '../../utils';
 
 const JoinWrap = styled.section`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,7 +44,7 @@ const Join = () => {
     password: '',
     passwordConfirm: '',
     email: '',
-    name: ''
+    name: '',
   });
 
   const [errorMessage, setErrorMessage] = useState<JoinErrorMessageType>({
@@ -53,7 +53,7 @@ const Join = () => {
     passwordConfirm: '',
     email: '',
     name: '',
-    error: ''
+    error: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [joinSuccess, setJoinSuccess] = useState(false);
@@ -65,33 +65,27 @@ const Join = () => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage((prev) => ({ ...prev, errorMessage: isValidate(joinValue, errorMessage) }));
+    const validationError = isValidate(joinValue, errorMessage);
 
-    if (
-      joinValue.id.trim() !== '' &&
-      joinValue.password.trim() !== '' &&
-      joinValue.passwordConfirm.trim() !== '' &&
-      joinValue.email.trim() !== '' &&
-      joinValue.name.trim() !== '' &&
-      joinValue.password.length >= 6 &&
-      joinValue.password.trim() === joinValue.passwordConfirm.trim() &&
-      emailRegEx.test(joinValue.email)
-    ) {
-      try {
-        setIsLoading(true);
-        await joinApi({
-          userId: joinValue.id,
-          email: joinValue.email,
-          password: joinValue.password,
-          name: joinValue.name
-        });
+    if (validationError) {
+      setErrorMessage((prev) => ({ ...prev, ...validationError }));
+      return;
+    }
 
-        setJoinSuccess(true);
-      } catch (error: any) {
-        setErrorMessage((prev) => ({ ...prev, error: error.message }));
-      } finally {
-        setIsLoading(false);
-      }
+    try {
+      setIsLoading(true);
+      await joinApi({
+        alias: joinValue.id,
+        email: joinValue.email,
+        password: joinValue.password,
+        name: joinValue.name,
+      });
+
+      setJoinSuccess(true);
+    } catch (error: any) {
+      setErrorMessage((prev) => ({ ...prev, error: error.message }));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,7 +94,7 @@ const Join = () => {
       {joinSuccess ? (
         <JoinSuccessWrap>
           <p> 회원가입이 완료되었습니다</p>
-          <Link to='/login'>로그인</Link>
+          <Link to="/login">로그인</Link>
         </JoinSuccessWrap>
       ) : (
         <JoinForm

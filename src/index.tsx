@@ -8,5 +8,5 @@ root.render(
   <React.StrictMode>
     <GlobalStyle />
     <RootRoute />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

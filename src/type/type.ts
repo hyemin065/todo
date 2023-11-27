@@ -13,7 +13,7 @@ export type JoinType = {
 };
 
 export type JoinPropsType = {
-  userId: string;
+  alias: string;
   password: string;
   email: string;
   name: string;
@@ -27,3 +27,12 @@ export type JoinErrorMessageType = {
   name: string;
   error: string;
 };
+
+export type LoginType = {
+  id: string;
+  password: string;
+};
+
+export type LoginPropsType = { alias: string; password: string };
+
+export type UserType = { id: number; userId: string; email: string; exp: number; iat: number };
