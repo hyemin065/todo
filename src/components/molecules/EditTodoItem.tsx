@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Dropdown from '../atoms/Dropdown';
 import Input from '../atoms/Input';
 import { EditContentsType } from '../../type/todo';
-import { contents } from '../../utils';
+import { contents } from '../../utils/common';
 import { flexbox } from '../../styles/flexbox';
 
 const EditTotoItem = styled.div`

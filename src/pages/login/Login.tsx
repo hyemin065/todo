@@ -2,12 +2,12 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import InputGroup from '../../components/molecules/InputGroup';
 import Button from '../../components/atoms/Button';
-import { LoginType, JwtUserInfoType } from '../../type/user';
+import { LoginType } from '../../type/user';
 import { loginApi } from '../../api/axiosPublic';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import { userState } from '../../store/login';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
+import { getUserInfoJwtDecode } from '../../utils';
 
 const LoginWrap = styled.section`
   width: 100%;
@@ -56,13 +56,13 @@ const Login = () => {
     try {
       setIsLoading(true);
       const res = await loginApi({ alias: loginValue.id, password: loginValue.password });
-      if (res) {
-        localStorage.setItem('token', JSON.stringify(res.token));
-        const user: JwtUserInfoType = jwtDecode(res.token.accessToken);
+      localStorage.setItem('token', JSON.stringify(res?.token));
+      const user = getUserInfoJwtDecode();
+      if (user) {
         setUserInfo(user);
-        alert('로그인 되었습니다.');
-        navigate('/');
       }
+      alert('로그인 되었습니다.');
+      navigate('/');
     } catch (error: any) {
       setErrorMessage((prev) => ({ ...prev, error: error.message }));
     } finally {

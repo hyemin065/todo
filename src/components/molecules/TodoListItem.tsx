@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { flexbox } from '../../styles/flexbox';
-import { contents } from '../../utils';
+import { contents } from '../../utils/common';
 import { TodosType } from '../../type/todo';
 
 const StyleTodoListItem = styled.div`

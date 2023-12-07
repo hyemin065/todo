@@ -6,7 +6,7 @@ import Dropdown from '../atoms/Dropdown';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 import { JwtUserInfoType } from '../../type/user';
-import { contents } from '../../utils';
+import { contents } from '../../utils/common';
 import { flexbox } from '../../styles/flexbox';
 
 const AddTodoGroupWrap = styled.div`

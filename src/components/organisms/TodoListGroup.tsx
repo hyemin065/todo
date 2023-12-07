@@ -4,7 +4,7 @@ import EditTodoItem from '../molecules/EditTodoItem';
 import TodoListItem from '../molecules/TodoListItem';
 import TodoEditAndDeleteButtons from '../molecules/TodoEditAndDeleteButtons';
 import { TodosType } from '../../type/todo';
-import { contents } from '../../utils';
+import { contents } from '../../utils/common';
 import { flexbox } from '../../styles/flexbox';
 
 const TodoGroupWrap = styled.ul`

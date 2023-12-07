@@ -1,4 +1,5 @@
-import { JoinErrorMessageType, JoinType } from '../type/user';
+import { jwtDecode } from 'jwt-decode';
+import { JoinErrorMessageType, JoinType, JwtUserInfoType } from '../type/user';
 import { emailRegEx } from './common';
 
 export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) => {
@@ -34,6 +35,15 @@ export const getLocalStorageToken = () => {
   if (token) {
     const { accessToken, refreshToken } = JSON.parse(token);
     return { accessToken, refreshToken };
+  }
+  return null;
+};
+
+export const getUserInfoJwtDecode = () => {
+  const token = getLocalStorageToken();
+  if (token) {
+    const user: JwtUserInfoType = jwtDecode(token?.accessToken);
+    return user;
   }
   return null;
 };

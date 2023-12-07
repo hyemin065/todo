@@ -1,11 +1,9 @@
+import { useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { userState } from '../../store/login';
-import { useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
 import Button from '../atoms/Button';
-import { getLocalStorageToken } from '../../utils';
-import { JwtUserInfoType } from '../../type/user';
+import { getUserInfoJwtDecode } from '../../utils';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -48,9 +46,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = getLocalStorageToken();
-    if (token) {
-      const user: JwtUserInfoType = jwtDecode(token?.accessToken);
+    const user = getUserInfoJwtDecode();
+    if (user) {
       setUserInfo(user);
     }
   }, [setUserInfo]);
@@ -59,7 +56,7 @@ const Header = () => {
     localStorage.removeItem('token');
     setUserInfo({ id: 0, alias: '', email: '', exp: 0, iat: 0 });
     alert('로그아웃 되었습니다');
-    navigate('/');
+    navigate('/login');
   };
 
   return (
