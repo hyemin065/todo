@@ -1,9 +1,4 @@
-export type Todos = {
-  id: number;
-  title: string;
-  isEdit: boolean;
-};
-
+//join
 export type JoinType = {
   id: string;
   password: string;
@@ -28,6 +23,7 @@ export type JoinErrorMessageType = {
   error: string;
 };
 
+//login
 export type LoginType = {
   id: string;
   password: string;
@@ -35,4 +31,17 @@ export type LoginType = {
 
 export type LoginPropsType = { alias: string; password: string };
 
-export type UserType = { id: number; userId: string; email: string; exp: number; iat: number };
+//user
+export type JwtUserInfoType = {
+  id: number;
+  alias: string;
+  email: string;
+  exp: number;
+  iat: number;
+};
+
+export type UserType = {
+  alias: string;
+  email: string;
+  name: string;
+};

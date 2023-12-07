@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Button from '../atoms/Button';
 import { getLocalStorageToken } from '../../utils';
-import { UserType } from '../../type/type';
+import { JwtUserInfoType } from '../../type/user';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -50,14 +50,14 @@ const Header = () => {
   useEffect(() => {
     const token = getLocalStorageToken();
     if (token) {
-      const user: UserType = jwtDecode(token?.accessToken);
+      const user: JwtUserInfoType = jwtDecode(token?.accessToken);
       setUserInfo(user);
     }
   }, [setUserInfo]);
 
   const logoutHandler = () => {
     localStorage.removeItem('token');
-    setUserInfo({ id: 0, userId: '', email: '', exp: 0, iat: 0 });
+    setUserInfo({ id: 0, alias: '', email: '', exp: 0, iat: 0 });
     alert('로그아웃 되었습니다');
     navigate('/');
   };
@@ -68,9 +68,9 @@ const Header = () => {
         <Link to="/">TODO</Link>
       </h1>
       <Nav>
-        {userInfo?.userId ? (
+        {userInfo?.alias ? (
           <>
-            <li>{`${userInfo.userId}님 안녕하세요`}</li>
+            <li>{`${userInfo.alias}님 안녕하세요`}</li>
             <li>
               <Button onClick={logoutHandler}>Logout</Button>
             </li>

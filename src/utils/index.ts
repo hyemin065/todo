@@ -1,6 +1,5 @@
-import { JoinErrorMessageType, JoinType } from '../type/type';
-
-export const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+import { JoinErrorMessageType, JoinType } from '../type/user';
+import { emailRegEx } from './common';
 
 export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) => {
   errorMessage.error = '';

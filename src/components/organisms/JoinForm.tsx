@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import InputGroup from '../molecules/InputGroup';
 import ErrorMessage from '../atoms/ErrorMessage';
 import Button from '../atoms/Button';
-import { JoinErrorMessageType, JoinType } from '../../type/type';
+import { JoinErrorMessageType, JoinType } from '../../type/user';
 
 const JoinErrorMessage = styled(ErrorMessage)`
   margin-bottom: 20px;

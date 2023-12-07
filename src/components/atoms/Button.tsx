@@ -28,7 +28,7 @@ type Props = {
   buttonType?: 'button' | 'submit' | 'reset';
   buttonStyle?: string;
   isLoading?: boolean;
-  children: string | JSX.Element | JSX.Element[];
+  children: string | JSX.Element | JSX.Element[] | React.ReactNode;
   onClick?: () => void;
 };
 
