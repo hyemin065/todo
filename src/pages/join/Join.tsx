@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { JoinType, JoinErrorMessageType } from '../../type/type';
+import { JoinType, JoinErrorMessageType } from '../../type/user';
 import { joinApi } from '../../api/axiosPublic';
 import JoinForm from '../../components/organisms/JoinForm';
 import { isValidate } from '../../utils';

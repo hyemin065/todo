@@ -1,6 +1,6 @@
-import { JoinErrorMessageType, JoinType } from '../type/type';
-
-export const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+import { jwtDecode } from 'jwt-decode';
+import { JoinErrorMessageType, JoinType, JwtUserInfoType } from '../type/user';
+import { emailRegEx } from './common';
 
 export const isValidate = (value: JoinType, errorMessage: JoinErrorMessageType) => {
   errorMessage.error = '';
@@ -35,6 +35,15 @@ export const getLocalStorageToken = () => {
   if (token) {
     const { accessToken, refreshToken } = JSON.parse(token);
     return { accessToken, refreshToken };
+  }
+  return null;
+};
+
+export const getUserInfoJwtDecode = () => {
+  const token = getLocalStorageToken();
+  if (token) {
+    const user: JwtUserInfoType = jwtDecode(token?.accessToken);
+    return user;
   }
   return null;
 };

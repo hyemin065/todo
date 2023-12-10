@@ -1,4 +1,4 @@
-import { JoinPropsType, LoginPropsType } from '../type/type';
+import { JoinPropsType, LoginPropsType } from '../type/user';
 import { axiosInstance } from './instance';
 import { instance } from './interceptors';
 
